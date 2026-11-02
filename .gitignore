@@ -1,0 +1,6 @@
+.DS_Store
+.netlify/
+node_modules/
+
+# Large marketing files stay out of the repo
+*.pdf
