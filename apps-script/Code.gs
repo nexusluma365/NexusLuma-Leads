@@ -6,9 +6,27 @@
  * Setup: paste into Extensions → Apps Script, run setupSheet once, then
  * Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone).
  * Put the /exec URL in LEAD_ENDPOINT in index.html.
+ *
+ * Welcome email: add an HTML file named "WelcomeEmail" to this Apps Script
+ * project and paste in nexus-luma/nexus-luma-welcome-email.html. Each new lead
+ * gets it from your Gmail account right after their row is saved.
  */
 
 const SHEET_NAME = "Websites Leads Q4";
+
+const EMAIL = {
+  ENABLED: true,
+  TEMPLATE_FILE: "WelcomeEmail",
+  SUBJECT: "Welcome to Nexus Luma! Your free Business Growth Guide",
+  FROM_NAME: "Nexus Luma",
+  REPLY_TO: "",  // blank = replies go to the Gmail account that deployed this script
+  WEBSITE_URL: "https://www.nexusluma.com",
+  ASSETS_BASE_URL: "https://cdn.jsdelivr.net/gh/nexusluma365/NexusLuma-Leads@main/nexus-luma/assets",
+  BROCHURE_URL: "https://raw.githubusercontent.com/nexusluma365/NexusLuma-Leads/main/public/nexus-luma-brochure.pdf",
+  COMPANY_ADDRESS: "",  // physical mailing address, required by CAN-SPAM
+  // Leave a profile blank to hide its icon in the footer.
+  SOCIAL: { facebook: "", linkedin: "", youtube: "", instagram: "" }
+};
 const HEADER_ROWS = 2; // row 1 = section names, row 2 = column names
 
 const STATUSES = [
@@ -66,11 +84,16 @@ const SECTIONS = [
     { header: "Google Click ID", width: 150, get: L => attr("gclid")(L) || attr("gbraid")(L) || attr("wbraid")(L) },
     { header: "Landing Page",    width: 150, get: attr("landing_page") },
     { header: "Referrer",        width: 200, get: attr("referrer") }
+  ]},
+  { name: "WELCOME EMAIL", solid: "#AD1457", mid: "#F8BBD0", tint: "#FCE4EC", columns: [
+    { header: "Welcome Email", width: 200, get: L => "", welcome: true }
   ]}
 ];
 
 const COLUMNS = SECTIONS.flatMap(s => s.columns.map(c => Object.assign({ section: s }, c)));
 const STATUS_COL = COLUMNS.findIndex(c => c.status) + 1;
+const WELCOME_COL = COLUMNS.findIndex(c => c.welcome) + 1;
+const OPT_IN_COL = COLUMNS.findIndex(c => c.header === "Marketing Opt-In") + 1;
 
 /* ───────── Web app ───────── */
 
@@ -83,7 +106,9 @@ function doPost(e) {
     }
     lock.waitLock(20000);
     const sheet = getSheet();
-    if (sheet.getRange(2, 1).getValue() !== COLUMNS[0].header) setupSheet();
+    if (sheet.getRange(2, 1).getValue() !== COLUMNS[0].header ||
+        sheet.getMaxColumns() < COLUMNS.length ||
+        sheet.getRange(2, COLUMNS.length).getValue() !== COLUMNS[COLUMNS.length - 1].header) setupSheet();
 
     // A retry after a dropped response sends the same ID again; don't record it twice.
     const last = sheet.getLastRow();
@@ -100,6 +125,7 @@ function doPost(e) {
     COLUMNS.forEach((c, i) => {
       if (c.format) sheet.getRange(row, i + 1).setNumberFormat(c.format);
     });
+    sheet.getRange(row, WELCOME_COL).setValue(sendWelcomeEmail(lead));
     return json({ ok: true, id: lead.client_request_id });
   } catch (err) {
     console.error(err);
@@ -109,7 +135,9 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  const id = e && e.parameter && e.parameter.unsubscribe;
+  if (id) return unsubscribe(id);
   return json({ ok: true, service: "Nexus Luma lead capture" });
 }
 
@@ -123,6 +151,80 @@ function clean(v) {
   if (v instanceof Date || typeof v === "number") return v;
   const s = String(v).slice(0, 2000);
   return /^[=+\-@]/.test(s) ? "'" + s : s;
+}
+
+/* ───────── Welcome email ───────── */
+
+const escHtml = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/** Sends the welcome email and returns what to show in the Welcome Email column. Never throws. */
+function sendWelcomeEmail(lead) {
+  if (!EMAIL.ENABLED) return "Off";
+  const to = String(lead.email || "").trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) return "Not sent: invalid email";
+  try {
+    if (MailApp.getRemainingDailyQuota() < 1) return "Not sent: daily Gmail limit reached";
+    const firstName = String(lead.first_name || "").trim().slice(0, 40);
+    const options = {
+      to: to,
+      subject: EMAIL.SUBJECT,
+      name: EMAIL.FROM_NAME,
+      htmlBody: renderWelcomeEmail(firstName, unsubscribeUrl(lead.client_request_id)),
+      body: "Hi " + (firstName || "there") + ",\n\nWelcome to Nexus Luma! Your free Business Growth Guide is ready:\n" +
+            EMAIL.BROCHURE_URL + "\n\n" + EMAIL.WEBSITE_URL
+    };
+    if (EMAIL.REPLY_TO) options.replyTo = EMAIL.REPLY_TO;
+    MailApp.sendEmail(options);
+    return "Sent " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, h:mm a");
+  } catch (err) {
+    console.error("Welcome email failed", err);
+    return "Failed: " + String(err.message || err).slice(0, 150);
+  }
+}
+
+function renderWelcomeEmail(firstName, unsubUrl) {
+  let html = HtmlService.createTemplateFromFile(EMAIL.TEMPLATE_FILE).getRawContent();
+
+  // Drop footer icons for profiles that aren't set, rather than leaving dead links
+  Object.keys(EMAIL.SOCIAL).forEach(k => {
+    if (!EMAIL.SOCIAL[k]) html = html.replace(new RegExp('<td[^>]*><a href="\\{\\{' + k + '_url\\}\\}"[\\s\\S]*?</td>'), "");
+  });
+  if (!EMAIL.COMPANY_ADDRESS) html = html.replace(" &middot; {{company_address}}", "");
+
+  const assets = EMAIL.ASSETS_BASE_URL;
+  const vars = {
+    first_name: firstName || "there",
+    website_url: EMAIL.WEBSITE_URL,
+    brochure_url: EMAIL.BROCHURE_URL,
+    assets_base_url: assets,
+    logo_url: assets + "/nexus-luma-logo.png",
+    cartoon_url: assets + "/hero-character.jpg",
+    brochure_image_url: assets + "/brochure-mockup.jpg",
+    unsubscribe_url: unsubUrl,
+    company_address: EMAIL.COMPANY_ADDRESS,
+    facebook_url: EMAIL.SOCIAL.facebook,
+    linkedin_url: EMAIL.SOCIAL.linkedin,
+    youtube_url: EMAIL.SOCIAL.youtube,
+    instagram_url: EMAIL.SOCIAL.instagram
+  };
+  return html.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in vars ? escHtml(vars[k]) : m));
+}
+
+function unsubscribeUrl(leadId) {
+  return ScriptApp.getService().getUrl() + "?unsubscribe=" + encodeURIComponent(leadId);
+}
+
+function unsubscribe(leadId) {
+  const sheet = getSheet();
+  const last = sheet.getLastRow();
+  const cell = last > HEADER_ROWS && sheet.getRange(HEADER_ROWS + 1, 1, last - HEADER_ROWS, 1)
+    .createTextFinder(String(leadId)).matchEntireCell(true).findNext();
+  if (cell) sheet.getRange(cell.getRow(), OPT_IN_COL).setValue("Unsubscribed");
+  return HtmlService.createHtmlOutput(
+    '<div style="font-family:Arial,sans-serif;max-width:480px;margin:60px auto;text-align:center;color:#06143B">' +
+    "<h2>You're unsubscribed.</h2><p>You won't receive marketing emails from Nexus Luma. " +
+    "We'll still reply if you contact us about a project.</p></div>"
+  ).setTitle("Unsubscribed");
 }
 
 /* ───────── Sheet layout ───────── */
@@ -205,14 +307,22 @@ function onOpen() {
   SpreadsheetApp.getUi().createMenu("Lead Capture")
     .addItem("Set up / reformat sheet", "setupSheet")
     .addItem("Add a test lead", "addTestLead")
+    .addItem("Send test welcome email to me", "sendTestWelcomeEmail")
     .addToUi();
 }
 
+function sendTestWelcomeEmail() {
+  const me = Session.getEffectiveUser().getEmail();
+  const result = sendWelcomeEmail({ client_request_id: "test", first_name: "Daniel", email: me });
+  SpreadsheetApp.getActiveSpreadsheet().toast(result + " → " + me, "Welcome email");
+}
+
+// Adds a sample row; the welcome email goes to your own address.
 function addTestLead() {
   const res = doPost({ postData: { contents: JSON.stringify({
     client_request_id: "test-" + Utilities.getUuid().slice(0, 8),
     created_at: new Date().toISOString(),
-    first_name: "Test", email: "test@example.com", phone: "(555) 123-4567",
+    first_name: "Test", email: Session.getEffectiveUser().getEmail(), phone: "(555) 123-4567",
     business_name: "Sample Plumbing Co.", business_location: "Austin, TX",
     business_category: "home_services", business_category_label: "Home Services",
     primary_goal: "calls", primary_goal_label: "Get more calls and inquiries",

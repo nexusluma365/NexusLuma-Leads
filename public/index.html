@@ -201,7 +201,6 @@ textarea.input{min-height:96px;resize:vertical}
       <span class="logo" aria-hidden="true"></span>
       Nexus Luma
     </button>
-    <button class="link" id="topPackages">View Packages</button>
   </div>
   <div class="progress" id="progressWrap" hidden><i id="progressBar" style="width:0"></i></div>
 </header>
@@ -355,7 +354,6 @@ function bridgeLines(){
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const progressWrap = document.getElementById("progressWrap"), progressBar = document.getElementById("progressBar");
-const topPackages = document.getElementById("topPackages");
 
 function go(phase){ clearTimers(); delete app.dataset.step; S.phase = phase; render(); window.scrollTo(0,0); }
 function focusHeading(){ const h = app.querySelector("h1"); if (h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } }
@@ -363,8 +361,6 @@ function focusHeading(){ const h = app.querySelector("h1"); if (h){ h.setAttribu
 function render(){
   document.querySelectorAll(".intro").forEach(n => n.remove());
   progressWrap.hidden = S.phase !== "quiz";
-  topPackages.hidden = S.phase === "packages" || S.phase === "success";
-  topPackages.textContent = S.phase === "lead" ? "All packages" : "View Packages";
   ({intro:renderIntro, quiz:renderQuiz, bridge:renderBridge, packages:renderPackages, lead:renderLead, success:renderSuccess})[S.phase]();
 }
 
@@ -660,7 +656,6 @@ function renderSuccess(){
 }
 
 /* ───────── Wiring ───────── */
-topPackages.addEventListener("click", () => go("packages"));
 document.getElementById("brandBtn").addEventListener("click", () => {
   if (S.phase === "success") { S.pkg=null; S.lead=null; S.converted=false; S.form={firstName:"",email:"",phone:"",businessName:"",location:"",notes:"",consent:false,hp:""}; }
   S.step = 0; go(S.phase === "intro" ? "quiz" : "intro");
