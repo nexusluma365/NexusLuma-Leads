@@ -17,12 +17,16 @@ const SHEET_NAME = "Websites Leads Q4";
 const EMAIL = {
   ENABLED: true,
   TEMPLATE_FILE: "WelcomeEmail",
-  SUBJECT: "Welcome to Nexus Luma! Your free Business Growth Guide",
+  // Personal, plain subject: no "free", caps or exclamation marks, which spam filters weigh against.
+  SUBJECT: "Welcome to Nexus Luma, {{first_name}}",
   FROM_NAME: "Nexus Luma",
   REPLY_TO: "",  // blank = replies go to the Gmail account that deployed this script
   WEBSITE_URL: "https://www.nexusluma.com",
   ASSETS_BASE_URL: "https://cdn.jsdelivr.net/gh/nexusluma365/NexusLuma-Leads@main/nexus-luma/assets",
-  BROCHURE_URL: "https://raw.githubusercontent.com/nexusluma365/NexusLuma-Leads/main/public/nexus-luma-brochure.pdf",
+  // The brochure link (Supabase signed URL, expires Nov 2, 2027) lives in
+  // Project Settings → Script properties → BROCHURE_URL, so it stays out of the public repo.
+  // A link pasted here is used only if that property isn't set.
+  BROCHURE_URL: "",
   COMPANY_ADDRESS: "",  // physical mailing address, required by CAN-SPAM
   // Leave a profile blank to hide its icon in the footer.
   SOCIAL: { facebook: "", linkedin: "", youtube: "", instagram: "" }
@@ -155,23 +159,39 @@ function clean(v) {
 
 /* ───────── Welcome email ───────── */
 
+const brochureUrl = () => PropertiesService.getScriptProperties().getProperty("BROCHURE_URL") || EMAIL.BROCHURE_URL;
+
 const escHtml = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-/** Sends the welcome email and returns what to show in the Welcome Email column. Never throws. */
+// "daniel" or "DANIEL" → "Daniel", word by word; deliberate casing like "DeShawn" is left alone.
+function greetingName(raw) {
+  return String(raw || "").replace(/\s+/g, " ").trim().slice(0, 40).split(" ").map(w =>
+    w !== w.toLowerCase() && w !== w.toUpperCase() ? w
+      : w.toLowerCase().replace(/(^|['-])(\S)/g, (m, sep, ch) => sep + ch.toUpperCase())
+  ).join(" ");
+}
+
+/** Sends the welcome email to the address the visitor typed and returns what to show in the Welcome Email column. Never throws. */
 function sendWelcomeEmail(lead) {
   if (!EMAIL.ENABLED) return "Off";
-  const to = String(lead.email || "").trim();
+  const to = String(lead.email || "").trim().toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) return "Not sent: invalid email";
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return "Not sent: daily Gmail limit reached";
-    const firstName = String(lead.first_name || "").trim().slice(0, 40);
+    const firstName = greetingName(lead.first_name);
     const options = {
       to: to,
-      subject: EMAIL.SUBJECT,
+      subject: firstName ? EMAIL.SUBJECT.replace("{{first_name}}", firstName) : EMAIL.SUBJECT.replace(/,?\s*\{\{first_name\}\}/, ""),
       name: EMAIL.FROM_NAME,
       htmlBody: renderWelcomeEmail(firstName, unsubscribeUrl(lead.client_request_id)),
-      body: "Hi " + (firstName || "there") + ",\n\nWelcome to Nexus Luma! Your free Business Growth Guide is ready:\n" +
-            EMAIL.BROCHURE_URL + "\n\n" + EMAIL.WEBSITE_URL
+      // Plain-text version: mail without one is more likely to be filtered
+      body: "Hi " + (firstName || "there") + ",\n\n" +
+            "We're glad you're here. Your Business Growth Guide is ready to view:\n" + brochureUrl() + "\n\n" +
+            "Your website shouldn't just look good. It should work for your business.\n\n" +
+            "The Nexus Luma Team\n" + EMAIL.WEBSITE_URL + "\n\n" +
+            "You're receiving this email because you requested information from Nexus Luma.\n" +
+            (EMAIL.COMPANY_ADDRESS ? "Nexus Luma LLC, " + EMAIL.COMPANY_ADDRESS + "\n" : "") +
+            "Unsubscribe: " + unsubscribeUrl(lead.client_request_id)
     };
     if (EMAIL.REPLY_TO) options.replyTo = EMAIL.REPLY_TO;
     MailApp.sendEmail(options);
@@ -195,7 +215,7 @@ function renderWelcomeEmail(firstName, unsubUrl) {
   const vars = {
     first_name: firstName || "there",
     website_url: EMAIL.WEBSITE_URL,
-    brochure_url: EMAIL.BROCHURE_URL,
+    brochure_url: brochureUrl(),
     assets_base_url: assets,
     logo_url: assets + "/nexus-luma-logo.png",
     cartoon_url: assets + "/hero-character.jpg",
@@ -309,6 +329,25 @@ function onOpen() {
     .addItem("Add a test lead", "addTestLead")
     .addItem("Send test welcome email to me", "sendTestWelcomeEmail")
     .addToUi();
+}
+
+/** Run from the editor: prints what's blocking the welcome email to the Execution log. */
+function checkEmailSetup() {
+  const log = [];
+  try { HtmlService.createTemplateFromFile(EMAIL.TEMPLATE_FILE); log.push("OK  Template file \"" + EMAIL.TEMPLATE_FILE + "\" found"); }
+  catch (e) { log.push("FIX No HTML file named \"" + EMAIL.TEMPLATE_FILE + "\": add it with + → HTML and paste the template"); }
+  try { log.push("OK  Email permission granted; Gmail sends left today: " + MailApp.getRemainingDailyQuota()); }
+  catch (e) { log.push("FIX Email permission missing: " + e.message); }
+  log.push(brochureUrl() ? "OK  Brochure link set" : "FIX Brochure link missing: add Script property BROCHURE_URL");
+  log.push("    Script owner (sender): " + Session.getEffectiveUser().getEmail());
+  log.push("    Live web app URL: " + (ScriptApp.getService().getUrl() || "not deployed"));
+  const sheet = getSheet(), last = sheet.getLastRow();
+  if (last > HEADER_ROWS) {
+    const n = Math.min(5, last - HEADER_ROWS);
+    sheet.getRange(last - n + 1, 1, n, WELCOME_COL).getValues().forEach(r =>
+      log.push("    Row " + r[0] + " → " + r[COLUMNS.findIndex(c => c.header === "Email")] + " → Welcome Email: \"" + r[WELCOME_COL - 1] + "\""));
+  }
+  console.log(log.join("\n"));
 }
 
 function sendTestWelcomeEmail() {

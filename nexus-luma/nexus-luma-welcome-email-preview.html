@@ -8,17 +8,14 @@
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
-<title>Nexus Luma Welcome Email — Preview</title>
-<!-- PREVIEW BUILD: sample values, relative asset paths. Do not send this file; send nexus-luma-welcome-email.html. -->
+<!-- PREVIEW ONLY: sample values and relative image paths. Send nexus-luma-welcome-email.html instead. -->
+<title>Welcome to Nexus Luma</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 <style>
-  table, td, div, p, a, span, h1, h2 { font-family: Arial, Helvetica, sans-serif !important; }
+  table, td, div, p, a, span, h1, h2 { font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important; }
 </style>
 <![endif]-->
-<!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<!--<![endif]-->
 <style>
   /* ---------- Resets ---------- */
   html, body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
@@ -31,286 +28,188 @@
   #MessageViewBody a { color: inherit; text-decoration: none; font: inherit; }
 
   /* ---------- Hover (clients that support it) ---------- */
-  .cta-link:hover { filter: brightness(1.08); }
+  .cta-link:hover { background-color: #0047D6 !important; }
+  .text-link:hover { text-decoration: underline !important; }
 
   /* ---------- Mobile ---------- */
   @media only screen and (max-width: 620px) {
-    .container { width: 100% !important; max-width: 100% !important; }
-    .px { padding-left: 22px !important; padding-right: 22px !important; }
-    .stack { display: block !important; width: auto !important; max-width: 100% !important; height: auto !important; box-sizing: border-box; }
-    .center { text-align: center !important; }
-    .hide-mobile { display: none !important; max-height: 0 !important; overflow: hidden !important; mso-hide: all !important; }
-
-    /* Logo header */
-    .logo-img { width: 270px !important; height: auto !important; }
-
-    /* Hero: character on top, headline + yellow panel below — no overlap */
-    .hero-char-cell { background-color: #0A3CB0 !important; }
-    .hero-char { width: 100% !important; max-width: 392px !important; height: auto !important; margin: 0 auto !important; }
-    .hero-copy { background-size: cover !important; background-position: center !important; padding: 26px 22px 30px 22px !important; text-align: center !important; }
-    .hero-h1a { font-size: 34px !important; line-height: 38px !important; }
-    .hero-h1b { font-size: 40px !important; line-height: 44px !important; }
-    .hero-rule { margin: 10px auto 16px auto !important; }
-    .hero-panel { margin: 0 auto !important; width: 100% !important; }
-    .hero-panel-text { font-size: 18px !important; line-height: 23px !important; }
-
-    /* Body type */
-    .greeting { font-size: 28px !important; line-height: 34px !important; }
-    .body-text { font-size: 17px !important; line-height: 26px !important; }
-
-    /* Info card */
-    .laptop-cell { padding: 20px 0 6px 0 !important; text-align: center !important; }
-    .laptop-img { margin: 0 auto !important; }
-    .divider-cell { display: none !important; }
-    .info-text { padding: 8px 22px 22px 22px !important; text-align: center !important; }
-    .info-head { font-size: 22px !important; line-height: 28px !important; }
-
-    /* Brochure card */
-    .brochure-cell { padding: 22px 16px 0 16px !important; text-align: center !important; }
-    .brochure-img { width: 100% !important; max-width: 300px !important; height: auto !important; margin: 0 auto !important; }
-    .promo-text { padding: 12px 20px 24px 20px !important; text-align: center !important; border-left: 0 !important; }
-    .promo-head { font-size: 27px !important; line-height: 31px !important; }
-    .cta-table { width: 100% !important; margin: 0 auto !important; }
-    .cta-link { font-size: 18px !important; padding-left: 14px !important; padding-right: 14px !important; }
-
-    /* Closing */
-    .closing-strong { font-size: 22px !important; line-height: 28px !important; }
-
-    /* Footer */
-    .footer-cell { padding: 18px 16px 22px 16px !important; background-size: cover !important; }
-    .footer-col { display: block !important; width: 100% !important; text-align: center !important; padding: 6px 0 !important; }
-    .footer-divider { display: none !important; }
-    .footer-brand { margin: 0 auto !important; }
-    .social-table { margin: 0 auto !important; }
+    .container { width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
+    .outer-pad { padding: 0 !important; }
+    .px { padding-left: 24px !important; padding-right: 24px !important; }
+    .panel-wrap { padding-left: 16px !important; padding-right: 16px !important; }
+    .hero-h1 { font-size: 36px !important; line-height: 40px !important; }
+    .hero-sub { font-size: 19px !important; line-height: 26px !important; }
+    .stage { padding: 28px 0 !important; }
+    .mascot { width: 220px !important; height: auto !important; }
+    .quote { font-size: 22px !important; line-height: 28px !important; }
+    .promo-head { font-size: 28px !important; line-height: 32px !important; }
+    .brochure-img { width: 100% !important; max-width: 300px !important; height: auto !important; }
+    .closing { font-size: 24px !important; line-height: 30px !important; }
   }
 </style>
 </head>
-<body id="body" style="margin:0; padding:0; background-color:#EEF3FA; word-spacing:normal;">
+<body id="body" style="margin:0; padding:0; background-color:#F5F5F7; word-spacing:normal;">
 
 <!-- ===== Preheader (inbox preview text, hidden in the email body) ===== -->
-<div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#EEF3FA;">
-  Your free Business Growth Guide is ready — see how a website becomes a customer-generating system.
+<div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#F5F5F7;">
+  Your Business Growth Guide is ready. See how a website becomes a system that brings you customers.
   &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp; &#847; &zwnj; &nbsp;
 </div>
 
-<div role="article" aria-roledescription="email" aria-label="Welcome to Nexus Luma" lang="en" style="background-color:#EEF3FA;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#EEF3FA;">
+<div role="article" aria-roledescription="email" aria-label="Welcome to Nexus Luma" lang="en" style="background-color:#F5F5F7;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F5F5F7;">
 <tr>
-<td align="center" style="padding:24px 0;">
+<td class="outer-pad" align="center" style="padding:32px 0;">
 
 <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
-<table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background-color:#FFFFFF; margin:0 auto;">
+<table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background-color:#FFFFFF; margin:0 auto; border-collapse:separate; border-radius:24px; overflow:hidden;">
 
-  <!-- ================= SECTION 1 · LOGO HEADER ================= -->
+  <!-- ================= LOGO ================= -->
   <tr>
-    <td align="center" style="padding:20px 20px 14px 20px; background-color:#FFFFFF;">
-      <a href="https://nexusluma.com/" target="_blank" style="text-decoration:none;">
-        <img class="logo-img" src="assets/nexus-luma-logo.png" width="330" height="58" alt="Nexus Luma" style="display:block; width:330px; height:auto; max-width:100%; margin:0 auto; border:0; font-family:Arial, sans-serif; font-size:26px; font-weight:bold; color:#06143B;">
+    <td align="center" style="padding:40px 24px 0 24px;">
+      <a href="https://www.nexusluma.com" target="_blank" style="text-decoration:none;">
+        <img src="assets/nexus-luma-logo.png" width="180" height="32" alt="Nexus Luma" style="display:block; width:180px; height:auto; margin:0 auto; border:0; font-family:Arial, sans-serif; font-size:20px; font-weight:600; color:#1D1D1F;">
       </a>
     </td>
   </tr>
 
-  <!-- ================= SECTION 2 · BLUE WELCOME BANNER ================= -->
+  <!-- ================= HERO ================= -->
   <tr>
-    <td style="background-color:#0A3CB0; padding:0;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <td class="px" align="center" style="padding:44px 48px 0 48px; text-align:center;">
+      <h1 class="hero-h1" style="margin:0; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:44px; line-height:48px; font-weight:700; letter-spacing:-0.8px; color:#1D1D1F;">
+        Welcome to<br><span style="color:#075BFF;">Nexus&nbsp;Luma.</span>
+      </h1>
+      <p class="hero-sub" style="margin:16px 0 0 0; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:21px; line-height:29px; font-weight:400; letter-spacing:-0.2px; color:#6E6E73;">
+        More than a website.<br>A system that brings you customers.
+      </p>
+    </td>
+  </tr>
+
+  <!-- ================= MASCOT STAGE ================= -->
+  <tr>
+    <td class="panel-wrap" style="padding:36px 24px 0 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;">
         <tr>
-          <!-- Character (left) -->
-          <td class="stack hero-char-cell" width="235" valign="bottom" style="width:235px; padding:0; vertical-align:bottom; background-color:#0A3CB0;">
-            <img class="hero-char" src="assets/hero-character.jpg" width="235" height="218" alt="Smiling Nexus Luma mascot pointing at the welcome message" style="display:block; width:235px; height:auto; border:0; font-family:Arial, sans-serif; font-size:14px; color:#FFFFFF;">
-          </td>
-          <!-- Headline (right) — background image with VML fallback for Outlook -->
-          <td class="stack hero-copy" width="365" valign="middle" background="assets/hero-bg-right.jpg" bgcolor="#06143B" style="width:365px; vertical-align:middle; background-color:#06143B; background-image:url('assets/hero-bg-right.jpg'); background-repeat:no-repeat; background-size:cover; background-position:left top; padding:10px 18px 10px 8px;">
-            <!--[if gte mso 9]>
-            <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:365px;height:218px;">
-              <v:fill type="frame" src="assets/hero-bg-right.jpg" color="#06143B" />
-              <v:textbox inset="8px,10px,18px,8px" style="mso-fit-shape-to-text:true">
-            <![endif]-->
-            <div>
-              <h1 style="margin:0; padding:0; font-weight:900; font-style:italic;">
-                <span class="hero-h1a" style="display:block; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:36px; line-height:40px; font-weight:900; font-style:italic; color:#FFFFFF; letter-spacing:-0.5px; text-shadow:0 2px 6px rgba(0,0,0,0.35);">Welcome to</span>
-                <span class="hero-h1b" style="display:block; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:40px; line-height:46px; font-weight:900; font-style:italic; color:#00D9FF; letter-spacing:-0.5px; text-shadow:0 0 14px rgba(0,217,255,0.45), 0 2px 4px rgba(0,0,0,0.35);">Nexus Luma!</span>
-              </h1>
-              <!-- Yellow accent line -->
-              <table role="presentation" class="hero-rule" width="250" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 10px 0;">
-                <tr><td height="4" bgcolor="#FFD900" style="height:4px; line-height:4px; font-size:4px; background-color:#FFD900; background-image:linear-gradient(90deg, rgba(255,217,0,0.2), #FFD900 30%, #FFD900 70%, rgba(255,217,0,0.2)); border-radius:4px;">&nbsp;</td></tr>
-              </table>
-              <!-- Yellow highlight panel -->
-              <table role="presentation" class="hero-panel" width="330" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate; width:330px;">
-                <tr>
-                  <td align="center" bgcolor="#FFD900" class="hero-panel-text" style="padding:9px 12px; background-color:#FFD900; background-image:linear-gradient(180deg, #FFF27A 0%, #FFE02E 45%, #FFC800 100%); border:3px solid #FFF6B8; border-radius:18px; box-shadow:0 4px 12px rgba(0,0,0,0.35); font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:17px; line-height:21px; font-weight:800; font-style:italic; color:#06143B; text-align:center;">
-                    More Than a Website...<br>A Customer-Generating<br>System for Your Business.
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+          <td class="stage" align="center" bgcolor="#0A2A7A" style="padding:36px 0; background-color:#0A2A7A; background-image:linear-gradient(160deg, #050E2B 0%, #0A2A7A 55%, #0A4FD6 100%); border-radius:28px;">
+            <img class="mascot" src="assets/hero-character.jpg" width="260" height="241" alt="The Nexus Luma mascot, smiling and pointing" style="display:block; width:260px; height:auto; margin:0 auto; border:0; border-radius:32px; box-shadow:0 10px 24px rgba(0,0,0,0.4); font-family:Arial, sans-serif; font-size:14px; color:#FFFFFF;">
           </td>
         </tr>
       </table>
     </td>
   </tr>
 
-  <!-- ================= SECTION 3 · PERSONALIZED WELCOME ================= -->
+  <!-- ================= LETTER ================= -->
   <tr>
-    <td class="px" style="padding:28px 34px 6px 34px; background-color:#FFFFFF; font-family:'Montserrat', Arial, Helvetica, sans-serif;">
-      <!-- Greeting: the first-name merge tag must fall back to "there". See README for your platform's syntax. -->
-      <h2 class="greeting" style="margin:0 0 6px 0; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:30px; line-height:36px; font-weight:800; color:#06143B;">Hi Daniel,</h2>
-      <p class="body-text" style="margin:0 0 12px 0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:18px; line-height:26px; font-weight:500; color:#111111;">We&rsquo;re glad you&rsquo;re here!</p>
-      <p class="body-text" style="margin:0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:26px; font-weight:500; color:#111111;">Most businesses are told they need a website. And they do.<br>But here&rsquo;s something important:</p>
+    <td class="px" style="padding:44px 48px 0 48px; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+      <p style="margin:0 0 18px 0; font-size:19px; line-height:28px; font-weight:600; color:#1D1D1F;">Hi Daniel,</p>
+      <p style="margin:0 0 18px 0; font-size:17px; line-height:27px; font-weight:400; color:#424245;">We&rsquo;re glad you&rsquo;re here.</p>
+      <p style="margin:0; font-size:17px; line-height:27px; font-weight:400; color:#424245;">Every business is told it needs a website. And it does. But a website on its own is only half the story.</p>
     </td>
   </tr>
 
-  <!-- ================= SECTION 4 · KEY VALUE CARD ================= -->
+  <!-- ================= STATEMENT ================= -->
   <tr>
-    <td class="px" style="padding:16px 20px 6px 20px; background-color:#FFFFFF;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#EAF4FE" style="border-collapse:separate; background-color:#EAF4FE; border:2px solid #A9D6FA; border-radius:18px; box-shadow:0 4px 14px rgba(7,91,255,0.14);">
+    <td class="panel-wrap" style="padding:36px 24px 0 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;">
         <tr>
-          <td class="stack laptop-cell" width="160" valign="middle" style="width:160px; padding:16px 6px 16px 16px; vertical-align:middle;">
-            <img class="laptop-img" src="assets/laptop.jpg" width="140" height="82" alt="Laptop showing the Nexus Luma logo" style="display:block; width:140px; height:auto; border:0; font-family:Arial, sans-serif; font-size:12px; color:#075BFF;">
-          </td>
-          <td class="divider-cell hide-mobile" width="2" style="width:2px; padding:22px 0;">
-            <table role="presentation" width="2" cellpadding="0" cellspacing="0" border="0"><tr><td width="2" height="70" bgcolor="#075BFF" style="width:2px; height:70px; background-color:#075BFF; font-size:0; line-height:0;">&nbsp;</td></tr></table>
-          </td>
-          <td class="stack info-text" valign="middle" style="padding:16px 20px 16px 18px; vertical-align:middle; font-family:'Montserrat', Arial, Helvetica, sans-serif;">
-            <p class="info-head" style="margin:0 0 6px 0; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:19px; line-height:24px; font-weight:800; font-style:italic; color:#0A2FB5; letter-spacing:-0.3px;">A website is the face of your business.</p>
-            <p class="body-text" style="margin:0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:24px; font-weight:500; color:#111111;">The system behind it is what helps turn visitors into customers.</p>
+          <td align="center" bgcolor="#EAF4FE" style="padding:36px 32px 40px 32px; background-color:#EAF4FE; border-radius:28px; text-align:center;">
+            <img src="assets/laptop.jpg" width="180" height="105" alt="Laptop showing the Nexus Luma logo" style="display:block; width:180px; height:auto; margin:0 auto 24px auto; border:0; font-family:Arial, sans-serif; font-size:12px; color:#075BFF;">
+            <p class="quote" style="margin:0; text-wrap:balance; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:26px; line-height:32px; font-weight:700; letter-spacing:-0.4px; color:#1D1D1F;">
+              A website is the face of your business.<br><span style="color:#075BFF;">The system behind it turns visitors into&nbsp;customers.</span>
+            </p>
           </td>
         </tr>
       </table>
     </td>
   </tr>
 
-  <!-- ================= SECTION 5 · WHAT NEXUS LUMA DOES ================= -->
+  <!-- ================= WHAT WE DO ================= -->
   <tr>
-    <td class="px" style="padding:16px 34px 4px 34px; background-color:#FFFFFF;">
-      <p class="body-text" style="margin:0 0 10px 0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:26px; font-weight:500; color:#111111;">That&rsquo;s why at Nexus Luma, we focus on more than beautiful designs.</p>
-      <p class="body-text" style="margin:0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:26px; font-weight:500; color:#111111;">We help businesses build the tools that work together to capture new leads, book appointments, follow up with interested customers, and create more opportunities to grow.</p>
+    <td class="px" style="padding:36px 48px 0 48px; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+      <p style="margin:0; font-size:17px; line-height:27px; font-weight:400; color:#424245;">That&rsquo;s why we build more than beautiful designs. We build the tools that work together behind them &mdash; capturing new leads, booking appointments and following up with interested customers &mdash; so every visit has a better chance of becoming business.</p>
     </td>
   </tr>
 
-  <!-- ================= SECTION 6 + 7 · FREE BROCHURE + PRIMARY CTA ================= -->
+  <!-- ================= GUIDE + CTA ================= -->
   <tr>
-    <td class="px" style="padding:20px 20px 8px 20px; background-color:#FFFFFF;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#EAF4FE" style="border-collapse:separate; background-color:#EAF4FE; border:2px solid #A9D6FA; border-radius:20px; box-shadow:0 6px 18px rgba(7,91,255,0.16);">
+    <td class="panel-wrap" style="padding:36px 24px 0 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;">
         <tr>
-          <td class="stack brochure-cell" width="214" valign="middle" style="width:214px; padding:14px 0 14px 10px; vertical-align:middle;">
-            <a href="https://nexusluma.com/" target="_blank" style="text-decoration:none;">
-              <img class="brochure-img" src="assets/brochure-mockup.jpg" width="204" height="164" alt="Nexus Luma Business Growth Guide brochure: The Complete System We Build for You" style="display:block; width:204px; height:auto; border:0; font-family:Arial, sans-serif; font-size:12px; color:#075BFF;">
+          <td align="center" bgcolor="#EAF4FE" style="padding:44px 32px 40px 32px; background-color:#EAF4FE; border-radius:28px; text-align:center; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+            <p style="margin:0 0 10px 0; font-size:13px; line-height:16px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:#075BFF;">Your guide</p>
+            <p class="promo-head" style="margin:0; text-wrap:balance; font-size:32px; line-height:36px; font-weight:700; letter-spacing:-0.6px; color:#1D1D1F;">The Business Growth Guide.</p>
+            <p style="margin:12px auto 0 auto; max-width:420px; font-size:17px; line-height:25px; font-weight:400; color:#6E6E73;">A short, illustrated look at the difference between having a website and having a complete system that brings you customers.</p>
+
+            <a href="#" target="_blank" style="text-decoration:none;">
+              <img class="brochure-img" src="assets/brochure-mockup.jpg" width="300" height="241" alt="Nexus Luma Business Growth Guide: The Complete System We Build for You" style="display:block; width:300px; height:auto; margin:28px auto 28px auto; border:0; font-family:Arial, sans-serif; font-size:12px; color:#075BFF;">
             </a>
-          </td>
-          <td class="stack promo-text" valign="middle" style="padding:18px 16px 18px 14px; vertical-align:middle;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td class="hide-mobile" width="2" style="width:2px; padding:4px 0 0 0; vertical-align:top;">
-                  <table role="presentation" width="2" cellpadding="0" cellspacing="0" border="0"><tr><td width="2" height="76" bgcolor="#075BFF" style="width:2px; height:76px; background-color:#075BFF; font-size:0; line-height:0;">&nbsp;</td></tr></table>
-                </td>
-                <td class="center" style="padding:0 0 0 14px; font-family:'Montserrat', Arial, Helvetica, sans-serif;">
-                  <p class="promo-head" style="margin:0 0 8px 0; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:25px; line-height:29px; font-weight:900; font-style:italic; color:#06143B; letter-spacing:-0.5px;">Your Free Business<br><span style="color:#0A2FB5;">Growth Guide Is Ready!</span></p>
-                  <p style="margin:0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:15px; line-height:21px; font-weight:500; color:#111111;">A simple, illustrated guide showing you the difference between having a website and having a complete customer-generating system.</p>
-                </td>
-              </tr>
-            </table>
 
-            <!-- Bulletproof CTA button (VML for Outlook, gradient pill elsewhere) -->
-            <table role="presentation" class="cta-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+            <!-- Bulletproof pill button (VML for Outlook) -->
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
               <tr>
                 <td align="center">
                   <!--[if mso]>
-                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://nexusluma.com/" style="height:56px;v-text-anchor:middle;width:326px;" arcsize="50%" strokecolor="#7FD6FF" strokeweight="2px" fillcolor="#075BFF">
-                    <v:fill type="gradient" color="#0A2FB5" color2="#1E8BFF" angle="90" />
+                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:50px;v-text-anchor:middle;width:210px;" arcsize="50%" stroke="f" fillcolor="#075BFF">
                     <w:anchorlock/>
-                    <center style="color:#FFFFFF;font-family:Arial, Helvetica, sans-serif;font-size:19px;font-weight:bold;font-style:italic;">View Your Free Brochure &#8594;</center>
+                    <center style="color:#FFFFFF;font-family:'Segoe UI', Arial, sans-serif;font-size:17px;font-weight:600;">View your guide</center>
                   </v:roundrect>
                   <![endif]-->
                   <!--[if !mso]><!-->
-                  <a class="cta-link" href="https://nexusluma.com/" target="_blank" role="button" aria-label="View your free Nexus Luma Business Growth Guide brochure (PDF)"
-                     style="display:block; background-color:#075BFF; background-image:linear-gradient(180deg, #3FA2FF 0%, #075BFF 48%, #0A2FB5 52%, #0B2E9E 100%); border:2px solid #7FD6FF; border-radius:40px; box-shadow:0 6px 16px rgba(7,40,160,0.45), inset 0 1px 0 rgba(255,255,255,0.45); color:#FFFFFF; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:19px; font-weight:900; font-style:italic; line-height:24px; text-align:center; text-decoration:none; padding:14px 18px; mso-hide:all; -webkit-text-size-adjust:none;">
-                    View Your Free Brochure&nbsp;&nbsp;<span style="display:inline-block; width:26px; height:26px; line-height:24px; border:2px solid #FFFFFF; border-radius:50%; font-style:normal; font-weight:700; font-size:16px; text-align:center; vertical-align:middle; box-sizing:border-box;">&#8594;</span>
-                  </a>
+                  <a class="cta-link" href="#" target="_blank" role="button" aria-label="View the Nexus Luma Business Growth Guide (PDF)"
+                     style="display:inline-block; background-color:#075BFF; border-radius:980px; color:#FFFFFF; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:17px; font-weight:600; line-height:20px; letter-spacing:-0.2px; text-align:center; text-decoration:none; padding:15px 32px; mso-hide:all; -webkit-text-size-adjust:none;">View your guide</a>
                   <!--<![endif]-->
                 </td>
               </tr>
             </table>
+            <p style="margin:18px 0 0 0; font-size:17px; line-height:22px; font-weight:400;">
+              <a class="text-link" href="https://www.nexusluma.com" target="_blank" style="color:#075BFF; text-decoration:none;">Visit nexusluma.com&nbsp;&rsaquo;</a>
+            </p>
           </td>
         </tr>
       </table>
     </td>
   </tr>
 
-  <!-- ================= CLOSING MESSAGE ================= -->
+  <!-- ================= CLOSING ================= -->
   <tr>
-    <td class="px" style="padding:22px 34px 26px 34px; background-color:#FFFFFF; font-family:'Montserrat', Arial, Helvetica, sans-serif;">
-      <p class="body-text" style="margin:0 0 4px 0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:26px; font-weight:500; color:#111111;">Because your website shouldn&rsquo;t just look good.</p>
-      <p class="closing-strong" style="margin:0; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:24px; line-height:30px; font-weight:800; font-style:italic; color:#075BFF; letter-spacing:-0.3px;">It should work for your business.</p>
-      <table role="presentation" width="300" cellpadding="0" cellspacing="0" border="0" style="width:300px; max-width:80%; margin:6px 0 16px 0;">
-        <tr><td height="4" bgcolor="#FFD900" style="height:4px; line-height:4px; font-size:4px; background-color:#FFD900; background-image:linear-gradient(90deg, #FFD900 0%, #FFD900 60%, rgba(255,217,0,0) 100%); border-radius:4px;">&nbsp;</td></tr>
-      </table>
-      <p class="body-text" style="margin:0 0 4px 0; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:26px; font-weight:500; color:#111111;">Here&rsquo;s to building something that works.</p>
-      <p style="margin:0; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:19px; line-height:26px; font-weight:800; color:#06143B;">The Nexus Luma Team</p>
-    </td>
-  </tr>
-
-  <!-- ================= FOOTER · CURVED BLUE WAVE ================= -->
-  <tr>
-    <td style="padding:0; font-size:0; line-height:0; background-color:#FFFFFF;">
-      <img src="assets/footer-wave.jpg" width="600" height="29" alt="" style="display:block; width:100%; max-width:600px; height:auto; border:0;">
-    </td>
-  </tr>
-  <tr>
-    <td class="footer-cell" background="assets/footer-bg.jpg" bgcolor="#023A93" style="background-color:#023A93; background-image:url('assets/footer-bg.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position:center top; padding:6px 20px 16px 20px;">
-      <!--[if gte mso 9]>
-      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:62px;">
-        <v:fill type="frame" src="assets/footer-bg.jpg" color="#023A93" />
-        <v:textbox inset="20px,6px,20px,10px" style="mso-fit-shape-to-text:true">
-      <![endif]-->
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <!-- Brand -->
-          <td class="footer-col" valign="middle" style="vertical-align:middle;">
-            <a href="https://nexusluma.com/" target="_blank" style="text-decoration:none;">
-              <table role="presentation" class="footer-brand" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td valign="middle" style="padding-right:8px; vertical-align:middle;"><img src="assets/nexus-luma-globe.png" width="46" height="31" alt="" style="display:block; width:46px; height:auto; border:0;"></td>
-                  <td valign="middle" style="vertical-align:middle; font-family:'Montserrat', 'Arial Black', Arial, Helvetica, sans-serif; font-size:19px; line-height:22px; font-weight:800; color:#FFFFFF; white-space:nowrap;">NEXUS LUMA<sup style="font-size:9px; line-height:0; vertical-align:super;">&trade;</sup></td>
-                </tr>
-              </table>
-            </a>
-          </td>
-          <!-- Divider -->
-          <td class="footer-divider hide-mobile" width="30" align="center" valign="middle" style="width:30px; vertical-align:middle;">
-            <table role="presentation" width="2" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td width="1" height="30" bgcolor="#8FB8FF" style="width:1px; height:30px; background-color:#8FB8FF; font-size:0; line-height:0;">&nbsp;</td></tr></table>
-          </td>
-          <!-- Website -->
-          <td class="footer-col" valign="middle" style="vertical-align:middle; font-family:'Montserrat', Arial, Helvetica, sans-serif; font-size:17px; line-height:22px; font-weight:500;">
-            <a href="https://nexusluma.com/" target="_blank" style="color:#FFFFFF; text-decoration:none;">nexusluma.com</a>
-          </td>
-          <!-- Social icons — delete any <td> whose URL you don't have -->
-          <td class="footer-col" align="right" valign="middle" style="vertical-align:middle;">
-            <table role="presentation" class="social-table" align="right" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="padding:0 4px;"><a href="#facebook" target="_blank"><img src="assets/icon-facebook.png" width="30" height="30" alt="Facebook" style="display:block; width:30px; height:30px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#FFFFFF;"></a></td>
-                <td style="padding:0 4px;"><a href="#linkedin" target="_blank"><img src="assets/icon-linkedin.png" width="30" height="30" alt="LinkedIn" style="display:block; width:30px; height:30px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#FFFFFF;"></a></td>
-                <td style="padding:0 4px;"><a href="#youtube" target="_blank"><img src="assets/icon-youtube.png" width="30" height="30" alt="YouTube" style="display:block; width:30px; height:30px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#FFFFFF;"></a></td>
-                <td style="padding:0 0 0 4px;"><a href="#instagram" target="_blank"><img src="assets/icon-instagram.png" width="30" height="30" alt="Instagram" style="display:block; width:30px; height:30px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#FFFFFF;"></a></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-      <!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+    <td class="px" align="center" style="padding:48px 48px 52px 48px; text-align:center; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+      <p class="closing" style="margin:0; text-wrap:balance; font-size:28px; line-height:34px; font-weight:700; letter-spacing:-0.5px; color:#1D1D1F;">Your website shouldn&rsquo;t just look good.<br><span style="color:#075BFF;">It should work for your business.</span></p>
+      <p style="margin:24px 0 4px 0; font-size:17px; line-height:25px; font-weight:400; color:#6E6E73;">Here&rsquo;s to building something that works.</p>
+      <p style="margin:0; font-size:17px; line-height:25px; font-weight:600; color:#1D1D1F;">The Nexus Luma Team</p>
     </td>
   </tr>
 </table>
 <!--[if mso]></td></tr></table><![endif]-->
 
-<!-- ================= COMPLIANCE ================= -->
+<!-- ================= FOOTER ================= -->
 <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; margin:0 auto;">
   <tr>
-    <td class="px" align="center" style="padding:18px 30px 8px 30px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; color:#5B6B85; text-align:center;">
+    <td align="center" style="padding:32px 24px 0 24px;">
+      <a href="https://www.nexusluma.com" target="_blank" style="text-decoration:none;">
+        <img src="assets/nexus-luma-globe.png" width="40" height="27" alt="Nexus Luma" style="display:block; width:40px; height:auto; margin:0 auto; border:0;">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding:16px 24px 0 24px;">
+      <!-- Social icons: Code.gs removes any whose URL isn't set -->
+      <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+        <tr>
+          <td style="padding:0 5px;"><a href="#" target="_blank" style="display:block; background-color:#1D1D1F; border-radius:50%; padding:3px;"><img src="assets/icon-facebook.png" width="26" height="26" alt="Facebook" style="display:block; width:26px; height:26px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#6E6E73;"></a></td>
+          <td style="padding:0 5px;"><a href="#" target="_blank" style="display:block; background-color:#1D1D1F; border-radius:50%; padding:3px;"><img src="assets/icon-linkedin.png" width="26" height="26" alt="LinkedIn" style="display:block; width:26px; height:26px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#6E6E73;"></a></td>
+          <td style="padding:0 5px;"><a href="#" target="_blank" style="display:block; background-color:#1D1D1F; border-radius:50%; padding:3px;"><img src="assets/icon-youtube.png" width="26" height="26" alt="YouTube" style="display:block; width:26px; height:26px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#6E6E73;"></a></td>
+          <td style="padding:0 5px;"><a href="#" target="_blank" style="display:block; background-color:#1D1D1F; border-radius:50%; padding:3px;"><img src="assets/icon-instagram.png" width="26" height="26" alt="Instagram" style="display:block; width:26px; height:26px; border:0; font-family:Arial, sans-serif; font-size:10px; color:#6E6E73;"></a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="px" align="center" style="padding:16px 40px 40px 40px; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:18px; color:#86868B; text-align:center;">
       You&rsquo;re receiving this email because you requested information from Nexus Luma.<br>
-      Nexus Luma LLC &middot; 123 Example Street, Charlotte, NC 28202 (sample)<br>
-      <a href="#unsubscribe" target="_blank" style="color:#075BFF; text-decoration:underline;">Unsubscribe</a>
+      Nexus Luma LLC &middot; 123 Example St, City, ST 00000<br>
+      <a href="https://www.nexusluma.com" target="_blank" style="color:#424245; text-decoration:none;">nexusluma.com</a>
+      &nbsp;&middot;&nbsp;
+      <a href="#" target="_blank" style="color:#424245; text-decoration:underline;">Unsubscribe</a>
     </td>
   </tr>
 </table>

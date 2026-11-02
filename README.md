@@ -9,7 +9,6 @@ Onboarding questionnaire and lead form for Nexus Luma website packages. Each sub
 | `public/index.html` | The whole site: one self-contained page (styles, script and logo inline). |
 | `apps-script/Code.gs` | Google Apps Script web app that receives leads, writes them to the sheet and sends the welcome email. |
 | `nexus-luma/` | Welcome email template and its images (served to inboxes from this repo via jsDelivr). |
-| `public/nexus-luma-brochure.pdf` | Brochure the welcome email links to. |
 | `netlify.toml` | Netlify config: publishes `public/`, no build step. |
 
 ## Run locally
@@ -32,6 +31,6 @@ After editing `apps-script/Code.gs`, paste it into the sheet's Extensions → Ap
 
 ## Welcome email
 
-Every new lead is emailed `nexus-luma/nexus-luma-welcome-email.html` from the Gmail account that deployed the script; the result shows in the sheet's "Welcome Email" column. Settings (subject, address, social links, brochure link) are in the `EMAIL` block at the top of `Code.gs`. The Apps Script project needs an HTML file named `WelcomeEmail` containing the template. Consumer Gmail allows about 100 automated emails a day.
+Every new lead is emailed `nexus-luma/nexus-luma-welcome-email.html` from the Gmail account that deployed the script; the result shows in the sheet's "Welcome Email" column. Settings (subject, address, social links) are in the `EMAIL` block at the top of `Code.gs`. The brochure link is a Supabase signed URL (expires Nov 2, 2027) kept out of this public repo: set it in Apps Script under Project Settings → Script properties as `BROCHURE_URL`. The Apps Script project needs an HTML file named `WelcomeEmail` containing the template. Consumer Gmail allows about 100 automated emails a day.
 
 Other settings in the page's config block: `BOOKING_URL` (Zoom scheduler shown after submitting) and `ADS_CONVERSION_SEND_TO` (Google Ads conversion, optional).

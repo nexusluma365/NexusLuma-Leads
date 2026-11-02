@@ -2,6 +2,5 @@
 .netlify/
 node_modules/
 
-# Large marketing files stay out of the repo, except the brochure the welcome email links to
+# Large marketing files stay out of the repo (the brochure is hosted on Supabase)
 *.pdf
-!public/nexus-luma-brochure.pdf

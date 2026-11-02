@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nexus Luma Onboarding</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
 <meta name="description" content="Affordable small business website design from Nexus Luma. Three clear one-time packages from $150 to $997. Request your project with no payment today.">
 <style>
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -53,11 +55,15 @@ main{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:col
 .screen{width:100%;max-width:560px;margin:auto;animation:enter .55s var(--ease) both}
 .screen.wide{max-width:1080px}
 .screen.still{animation:none}
+.screen.leave{opacity:0;transform:translateY(-6px);transition:opacity .18s ease-in,transform .18s ease-in;pointer-events:none}
 @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 
 /* Intro and bridge */
 .intro{position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:calc(env(safe-area-inset-top,0px) + 24px) max(24px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(24px,env(safe-area-inset-left,0px))}
+  padding:calc(env(safe-area-inset-top,0px) + 24px) max(24px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(24px,env(safe-area-inset-left,0px));
+  animation:fade .35s var(--ease) both}
+.intro.out{opacity:0;transition:opacity .4s var(--ease);pointer-events:none}
 .intro::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(41,151,255,.12),transparent 55%);pointer-events:none}
 .line{position:relative;max-width:16ch;text-align:center;font-size:clamp(34px,7vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1.08;text-wrap:balance;
   opacity:0;transform:translateY(8px) scale(.985);filter:blur(6px);transition:opacity .55s var(--ease),transform .55s var(--ease),filter .55s var(--ease)}
@@ -92,7 +98,7 @@ h1:focus{outline:none}
 .opt[aria-checked="true"] .chk svg{opacity:1}
 .extra{margin-top:14px;animation:enter .35s var(--ease) both}
 label.lbl{display:block;font-size:14px;color:var(--muted);margin-bottom:7px}
-.input{width:100%;min-height:52px;padding:13px 15px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:17px;transition:border-color .2s}
+.input{scroll-margin-top:110px;width:100%;min-height:52px;padding:13px 15px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:17px;transition:border-color .2s}
 .input:focus{outline:none;border-color:var(--accent)}
 .input[aria-invalid="true"]{border-color:var(--danger)}
 textarea.input{min-height:96px;resize:vertical}
@@ -100,9 +106,9 @@ textarea.input{min-height:96px;resize:vertical}
 /* CTA buttons: based on the Uiverse.io button by SteveBloX */
 .btn,.btn.blue{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:150px;min-height:60px;padding:6px 26px;
   border:3px solid #315cfd;border-radius:45px;background:white;color:#0A0A0B;font-size:1.2em;font-weight:550;line-height:1.2;text-align:center;
-  cursor:pointer;transition:all .3s}
-.btn:hover:not([disabled]){background:#315cfd;color:white;font-size:1.5em}
-.btn.full:hover:not([disabled]){font-size:1.35em}
+  cursor:pointer;transition:background-color .25s var(--ease),color .25s var(--ease),transform .25s var(--ease),opacity .25s}
+@media(hover:hover){.btn:hover:not([disabled]){background:#315cfd;color:white;transform:scale(1.04)}
+  .btn.full:hover:not([disabled]){transform:scale(1.02)}}
 .btn:active:not([disabled]){transform:scale(.98)}
 .btn[disabled]{opacity:.35;cursor:not-allowed}
 .btn.full{width:100%}
@@ -219,7 +225,7 @@ textarea.input{min-height:96px;resize:vertical}
 
 /* ───────── Config ───────── */
 // Set these to go live. With LEAD_ENDPOINT empty the page runs in preview mode and nothing is sent.
-const LEAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbx7TC7eRI20PRbE4LEDv6gb4x5_E7V88qSSbv6Vb_5f92Uw9Zq3Xtwm1DuzDOw2dO59/exec";          // e.g. "/api/leads", or the Google Apps Script web app URL ending in /exec (see Code.gs)
+const LEAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbyF8tWougvjLTVfNsWK2oiTSk1St0Z28E9lWvmmsdqPzy3OlSh9pcUZMoWfg7WTT8r7/exec";          // e.g. "/api/leads", or the Google Apps Script web app URL ending in /exec (see Code.gs)
 const BOOKING_URL = "https://scheduler.zoom.us/elijah-thornton/30-min-strategy-call";
 // Adds the visitor's details to the booking link so the scheduler can fill them in.
 // Zoom does not document prefill parameters, so these are best effort; Calendly and Cal.com read name/email this way.
@@ -355,11 +361,25 @@ const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const progressWrap = document.getElementById("progressWrap"), progressBar = document.getElementById("progressBar");
 
-function go(phase){ clearTimers(); delete app.dataset.step; S.phase = phase; render(); window.scrollTo(0,0); }
+// Fade the current screen out before the next one fades in
+const EXIT = reduced ? 0 : 180;
+const leaving = () => !!app.querySelector(".screen.leave");
+function swap(update){
+  const cur = app.querySelector(".screen");
+  if (!cur || !EXIT){ update(); return; }
+  cur.classList.add("leave");
+  later(update, EXIT);
+}
+function go(phase){
+  clearTimers();
+  swap(() => { delete app.dataset.step; delete app.dataset.phase; S.phase = phase; render(); window.scrollTo(0,0); });
+}
 function focusHeading(){ const h = app.querySelector("h1"); if (h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } }
 
 function render(){
-  document.querySelectorAll(".intro").forEach(n => n.remove());
+  document.querySelectorAll(".intro:not(.out)").forEach(n => { n.classList.add("out"); setTimeout(() => n.remove(), 450); });
+  // Re-renders of the same screen (validation, sending state) shouldn't replay the entrance animation
+  S.same = app.dataset.phase === S.phase; app.dataset.phase = S.phase;
   progressWrap.hidden = S.phase !== "quiz";
   ({intro:renderIntro, quiz:renderQuiz, bridge:renderBridge, packages:renderPackages, lead:renderLead, success:renderSuccess})[S.phase]();
 }
@@ -431,7 +451,8 @@ function renderQuiz(){
   const su = app.querySelector("#siteUrl"); if (su) su.addEventListener("input", e => S.answers.url = e.target.value);
   app.querySelector("#next").addEventListener("click", next);
   app.querySelector("#back").addEventListener("click", () => {
-    if (S.step === 0) { clearTimers(); go("intro"); } else { S.step--; delete app.dataset.step; render(); }
+    if (leaving()) return;
+    if (S.step === 0) go("intro"); else { clearTimers(); swap(() => { S.step--; delete app.dataset.step; render(); }); }
   });
   if (!still) focusHeading();
 }
@@ -446,11 +467,12 @@ function choose(id, viaKeys){
   if (!viaKeys && !hasExtra) later(next, reduced ? 120 : 380);
 }
 function next(){
+  if (leaving()) return;
   clearTimers();
   const q = QUESTIONS[S.step];
   if (!S.answers[q.id]) return;
   track("question_completed",{question_id:q.id, step:S.step+1});
-  if (S.step < QUESTIONS.length - 1) { S.step++; delete app.dataset.step; render(); }
+  if (S.step < QUESTIONS.length - 1) swap(() => { S.step++; delete app.dataset.step; render(); });
   else { S.viaQuiz = true; track("questionnaire_completed"); progressBar.style.width = "100%"; go("bridge"); }
 }
 
@@ -463,7 +485,7 @@ function renderBridge(){
 function renderPackages(){
   const rec = S.viaQuiz ? recommend() : null;
   if (rec) track("package_recommendation_viewed",{recommended_package:rec.id});
-  app.innerHTML = `<section class="screen wide">
+  app.innerHTML = `<section class="screen wide${S.same?" still":""}">
     <div class="pk-head">
       <span class="logo pk-logo" role="img" aria-label="Nexus Luma"></span>
       <h1>Choose How You Want Your Business to Grow.</h1>
@@ -511,7 +533,7 @@ function renderLead(){
       <label class="lbl" for="${id}">${label}${opts.req?' <span class="req">(required)</span>':' <span class="req">(optional)</span>'}</label>
       <input class="input" id="${id}" name="${id}" type="${type}" ${opts.ac?`autocomplete="${opts.ac}"`:""} ${opts.im?`inputmode="${opts.im}"`:""} maxlength="${opts.max||120}" value="${esc(f[id])}" ${er[id]?`aria-invalid="true" aria-describedby="${id}-err"`:""} ${opts.req?"required":""}>
       ${er[id]?`<p class="err" id="${id}-err">${esc(er[id])}</p>`:""}</div>`;
-  app.innerHTML = `<section class="screen">
+  app.innerHTML = `<section class="screen${S.same?" still":""}">
     <button class="back" id="toPackages" style="margin:-8px 0 14px">${I.back}Packages</button>
     <h1>Let's Bring Your Business Online.</h1>
     <p class="sub">You're one step away from getting started. Tell us where to send your project details.</p>
@@ -553,10 +575,24 @@ function renderLead(){
   const r = app.querySelector("#retry"); if (r) r.addEventListener("click", submit);
 }
 
+// Common misspellings of big email providers; the welcome email would bounce or go to a stranger
+const EMAIL_TYPOS = {
+  "gmial.com":"gmail.com","gmai.com":"gmail.com","gamil.com":"gmail.com","gnail.com":"gmail.com","gmal.com":"gmail.com",
+  "gmail.co":"gmail.com","gmail.con":"gmail.com","gmail.cm":"gmail.com","gmail.om":"gmail.com",
+  "hotmial.com":"hotmail.com","hotmal.com":"hotmail.com","hotmail.co":"hotmail.com","hotmail.con":"hotmail.com",
+  "yaho.com":"yahoo.com","yahooo.com":"yahoo.com","yahoo.co":"yahoo.com","yahoo.con":"yahoo.com",
+  "outlok.com":"outlook.com","outlook.co":"outlook.com","outlook.con":"outlook.com",
+  "iclod.com":"icloud.com","icoud.com":"icloud.com","icloud.co":"icloud.com","icloud.con":"icloud.com"
+};
 function validate(){
   const f = S.form, e = {};
   if (!f.firstName.trim()) e.firstName = "Enter your first name.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = "Enter an email address like name@business.com.";
+  const email = f.email.trim().toLowerCase(), [local, domain] = email.split("@");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) e.email = "Enter an email address like name@business.com.";
+  else if (EMAIL_TYPOS[domain] && S.emailChecked !== email){
+    S.emailChecked = email; // a second submit with the same address goes through
+    e.email = `Did you mean ${local}@${EMAIL_TYPOS[domain]}? We'll send your welcome email here, so please double-check it.`;
+  }
   const digits = f.phone.replace(/\D/g,"");
   if (digits.length < 10 || digits.length > 15) e.phone = "Enter a phone number with area code.";
   return e;
@@ -628,7 +664,7 @@ async function saveLead(lead){
 
 function renderSuccess(){
   const p = pkgById(S.pkg), L = S.lead;
-  app.innerHTML = `<section class="screen done">
+  app.innerHTML = `<section class="screen done${S.same?" still":""}">
     <svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45"/><path d="M32 51l12 12 24-26"/></svg>
     <h1>You're All Set.</h1>
     <p class="sub">Your project request has been received.<br>One last step: book a quick Zoom call so we can go over your project.</p>
